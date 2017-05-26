@@ -18,7 +18,8 @@ app.post('/', (req, res) => {
     if (req.get('X-Line-Signature') === signature) {
         res.status(200).send({});
     }
-    res.status(500).send({});
+    else
+        res.status(500).send({});
 });
 
 app.listen(process.env.PORT || 8080, () => {
