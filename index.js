@@ -19,7 +19,7 @@ app.post('/', linebotParser);
 
 // handle message event
 bot.on('message', function (event) {
-    if (event.type === "text") textMessageHandler.process(event);
+    if (event.message.type === "text") textMessageHandler.process(event);
 });
 
 app.listen(process.env.PORT || 8080, () => {
