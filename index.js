@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json()); // parsing application/json
 
 app.post('/', (req, res) => {
-    const signature = createHmac('SHA256', channelSecret)
+    const signature = crypto.createHmac('SHA256', channelSecret)
         .update(req.body)
         .digest('base64');
     if (req.get('X-Line-Signature') === signature) {
