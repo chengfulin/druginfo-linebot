@@ -16,8 +16,9 @@ app.post('/', (req, res) => {
         .update(JSON.stringify(req.body))
         .digest('base64');
     if (req.get('X-Line-Signature') === signature) {
-        res.status = 200;
+        res.status(200).send({});
     }
+    res.status(500).send({});
 });
 
 app.listen(process.env.PORT || 8080, () => {
