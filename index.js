@@ -13,7 +13,7 @@ app.use(bodyParser.json()); // parsing application/json
 
 app.post('/', (req, res) => {
     const signature = crypto.createHmac('SHA256', channelSecret)
-        .update(req.body)
+        .update(JSON.stringify(req.body))
         .digest('base64');
     if (req.get('X-Line-Signature') === signature) {
         res.status = 200;
