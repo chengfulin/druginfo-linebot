@@ -21,7 +21,7 @@ router.get('/drugimgs', (req, res) => {
     res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Accept');
     const imgs = [];
     for (let index = 0; index < drugsInfo.length; ++index) {
-        imgs.push(drugsInfo[index][7]['圖片']);
+        imgs.push(encodeURIComponent(drugsInfo[index][7]['圖片'].split(';')[0]));
     }
     res.json(imgs);
 });
