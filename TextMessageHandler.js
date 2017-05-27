@@ -40,13 +40,13 @@ class TextMessageHandler{
     processDrugInfo(event) {
         const search = event.message.text.substring(event.message.text.match(this._keywords.drugInfo)[0].length);
         const info = "";
-        drugsInfo.forEach((drug) => {
-            const names = drug[1]['藥物名稱'] + drug[2]['俗名'];
+        for (let index = 0; index < drugsInfo.length; ++index) {
+            const names = drugsInfo[index][1]['藥物名稱'] + drugsInfo[index][2]['俗名'];
             if (names.indexOf(search) !== -1) {
-                info = drug[6]['說明'];
+                info = drugsInfo[index][6]['說明'];
                 return false;
             }
-        });
+        }
         if (info && info.length > 0) event.reply(info);
         else event.reply("no such drug");
     }
