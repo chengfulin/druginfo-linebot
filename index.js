@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const linebot = require('linebot');
+const bodyParser = require("body-parser");
 
 const bot = linebot({
     channelId: '1517058705',
@@ -19,6 +20,7 @@ app.use(express.static(__dirname + '/public'));
 const apiRouter = require('./api/api');
 app.use('/api', apiRouter);
 app.post('/', linebotParser);
+app.use(bodyParser.urlencoded({ extended: true })); // parsing application/x-www-form-urlencoded
 
 // handle message event
 const textMessageHandler = require('./TextMessageHandler');
