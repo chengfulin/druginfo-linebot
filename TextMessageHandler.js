@@ -37,7 +37,7 @@ class TextMessageHandler{
     }
 
     processDrugInfo(event) {
-        const search = event.message.text.substring(event.message.text.match(this._keywords.drugInfo[0].length));
+        const search = event.message.text.substring(event.message.text.match(this._keywords.drugInfo)[0].length);
         fetch('http://data.fda.gov.tw/cacheData/50_3.json')
             .then((response) => {
                 return response.json();
