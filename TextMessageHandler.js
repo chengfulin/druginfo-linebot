@@ -5,13 +5,13 @@ class TextMessageHandler{
     constructor() {
         this._keywords = {
             echo: /^##\s+/,
-            notify: /^[通報|我要通報]\s+/,
-            search: /^[查詢|我要查詢]\s+/
+            notify: /^(通報|我要通報)\s+/,
+            search: /^(查詢|我要查詢)\s+/
         };
         this._pattern = {
             echo: /^##\s+.+/,
-            notify: /^[通報|我要通報]\s+.+/,
-            search: /^[查詢|我要查詢]\s+.+/
+            notify: /^(通報|我要通報)\s+.+/,
+            search: /^(查詢|我要查詢)\s+.+/
         };
     }
 
