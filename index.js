@@ -18,7 +18,7 @@ app.use(morgan('dev')); // log every request on console
 app.use(express.static(__dirname + '/public'));
 
 const apiRouter = require('./api/api');
-app.get('/api', apiRouter);
+app.use('/api', apiRouter);
 app.post('/', linebotParser);
 
 // handle message event
