@@ -55,7 +55,7 @@ class TextMessageHandler{
         console.log(foundDrugImg);
        
         if (info && info.length > 0)
-            event.reply(info);
+            event.reply(info)
             // event.reply({
             //     'type': 'template',
             //     'altText': foundDrugName,
