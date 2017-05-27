@@ -49,7 +49,7 @@ class TextMessageHandler{
                 foundDrugName = drugsInfo[index][1]['藥物名稱'];
                 foundDrugImg = encodeURI(drugsInfo[index][7]['圖片'].split(';')[0]);
                 base64.encode(foundDrugImg, { "string": true, "local": true }, (err, res => {
-                    if (!error) foundDrugImg = res;
+                    if (!err) foundDrugImg = res;
                 }));
                 break;
             }
