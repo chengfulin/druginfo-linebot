@@ -22,7 +22,13 @@ class TextMessageHandler{
      * @param {*} event 
      */
     process(event) {
-        if (this._pattern.notify.test(event.message.text)) {
+        if (this._pattern.cancel.test(event.message.text)) {
+            this.cancelNotification(event);
+        }
+        else if (!this._pattern.notCancel.test(event.message.text)) {
+            this.checkToCompleteNotification(event);
+        }
+        else if (this._pattern.notify.test(event.message.text)) {
             this.processNotificationDrug(event);
         }
         else if (this._pattern.search.test(event.message.text)) {
@@ -30,12 +36,6 @@ class TextMessageHandler{
         }
         else if (event.message.type === 'location') {
             this.processNotification(event);
-        }
-        else if (this._pattern.cancel.test(event.message.text)) {
-            this.cancelNotification(event);
-        }
-        else if (!this._pattern.notCancel.test(event.message.text)) {
-            this.checkToCompleteNotification(event);
         }
     }
 
