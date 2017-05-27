@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const linebot = require('linebot');
-const textMessageHandler = require('./TextMessageHandler');
 
 const bot = linebot({
     channelId: '1517058705',
@@ -22,8 +21,15 @@ app.use('/api', apiRouter);
 app.post('/', linebotParser);
 
 // handle message event
-bot.on('message', function (event) {
+const textMessageHandler = require('./TextMessageHandler');
+bot.on('message', (event) => {
     textMessageHandler.process(event);
+});
+
+// handle postback event
+const postbackHandler = require('./PostBackHandler');
+bot.on('postback', (event) => {
+    postbackHandler.process(event);
 });
 
 app.listen(process.env.PORT || 8080, () => {

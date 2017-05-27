@@ -83,22 +83,22 @@ class TextMessageHandler{
                         {
                             "type": "postback",
                             "label": "分級",
-                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&col=分級'
+                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&index=3&col=分級'
                         },
                         {
                             "type": "postback",
                             "label": "醫療用途",
-                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&col=醫療用途'
+                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&index=4&col=醫療用途'
                         },
                         {
                             "type": "postback",
                             "label": "濫用方式",
-                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&col=濫用方式'
+                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&index=5&col=濫用方式'
                         },
                         {
                             "type": "postback",
                             "label": "說明",
-                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&col=說明'
+                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&index=6&col=說明'
                         }
                     ]}
                 })
