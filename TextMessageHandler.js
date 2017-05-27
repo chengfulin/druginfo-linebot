@@ -60,7 +60,7 @@ class TextMessageHandler{
                 'altText': foundDrugName,
                 'template': {
                     'type': 'buttons',
-                    'thumbnailImageUrl': 'https://httpsimage.com/lock.png',
+                    'thumbnailImageUrl': 'https://consumer.fda.gov.tw/Files/Drug_Abuse/1/Heroin(%E7%84%A1%E7%AE%A1%E7%AE%A1%E5%B1%80logo)%20-%20%E6%AA%A2%E5%87%BAHeroin_1.jpg',
                     'title': '管制藥品資訊',
                     'text': '00',
                     'actions': [
