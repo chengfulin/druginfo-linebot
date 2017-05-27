@@ -54,28 +54,21 @@ class TextMessageHandler{
         // console.log(foundDrugImg);
         if (info && info.length > 0) {
             // event.reply(info)
-            event.reply({
-                'type': 'template',
-                'altText': foundDrugName,
-                'template': {
-                    'type': 'buttons',
-                    'thumbnailImageUrl': encodeURI('https://consumer.fda.gov.tw/Files/Drug_Abuse/9/%E5%8F%A4%E6%9F%AF%E9%B9%BC1.jpg'),
-                    'title': '管制藥品資訊',
-                    'text': 'info',
-                    'actions': [
-                        {
-                            "type": "uri",
-                            "label": "View detail",
-                            "uri": foundDrugImg
-                        }
-                    ]
-                }
-            })
             // event.reply({
-            //     "type": "image",
-            //     "originalContentUrl": foundDrugImg,
-            //     "previewImageUrl": foundDrugImg
+            //     'type': 'template',
+            //     'altText': foundDrugName,
+            //     'template': {
+            //         'type': 'buttons',
+            //         'title': '管制藥品資訊',
+            //         'text': 'info',
+            //         'actions': []
+            //     }
             // })
+            event.reply({
+                "type": "image",
+                "originalContentUrl": foundDrugImg,
+                "previewImageUrl": foundDrugImg
+            })
             .then((data) => {
                 console.log(">> template success");
                 console.log(data);
