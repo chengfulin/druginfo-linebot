@@ -51,6 +51,8 @@ class TextMessageHandler{
                 break;
             }
         }
+        console.log(foundDrugName);
+        console.log(foundDrugImg);
         if (info && info.length > 0)
             event.reply({
                 'type': 'template',
