@@ -39,7 +39,7 @@ class TextMessageHandler{
 
     processDrugInfo(event) {
         const search = event.message.text.substring(event.message.text.match(this._keywords.drugInfo)[0].length);
-        const info = "";
+        let info = "";
         for (let index = 0; index < drugsInfo.length; ++index) {
             const names = drugsInfo[index][1]['藥物名稱'] + drugsInfo[index][2]['俗名'];
             if (names.indexOf(search) !== -1) {
