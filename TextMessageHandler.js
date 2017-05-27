@@ -60,7 +60,7 @@ class TextMessageHandler{
                 'altText': foundDrugName,
                 'template': {
                     'type': 'buttons',
-                    'thumbnailImageUrl': foundDrugImg,
+                    'thumbnailImageUrl': 'http://www.citsu.ie/contentfiles/images/drugs.jpg',
                     'title': '管制藥品資訊',
                     'text': '00',
                     'actions': [
