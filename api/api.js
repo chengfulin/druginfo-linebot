@@ -14,4 +14,16 @@ router.get('/notification/all', (req, res) => {
         });
 });
 
+const drugsInfo = require('./drugs.json');
+router.get('/drugimgs', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,DELETE,POST,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Accept');
+    const imgs = [];
+    for (let index = 0; index < drugsInfo.length; ++index) {
+        imgs.push(drugsInfo[index][7]['圖片']);
+    }
+    res.json(imgs);
+})
+
 module.exports = router;
