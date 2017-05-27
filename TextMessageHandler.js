@@ -34,7 +34,7 @@ class TextMessageHandler{
         else if (this._pattern.cancel.test(event.message.text)) {
             this.cancelNotification(event);
         }
-        else {
+        else if (!this._pattern.notCancel.test(event.message.text)) {
             this.checkToCompleteNotification(event);
         }
     }
