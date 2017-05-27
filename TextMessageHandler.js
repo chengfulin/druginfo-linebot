@@ -5,11 +5,13 @@ class TextMessageHandler{
     constructor() {
         this._keywords = {
             notify: /^(通報|我要通報)\s+/,
-            search: /^(查詢|我要查詢)\s+/
+            search: /^(查詢|我要查詢)\s+/,
+            cancel: /^:Y$/
         };
         this._pattern = {
             notify: /^(通報|我要通報)\s+.+/,
-            search: /^(查詢|我要查詢)\s+.+/
+            search: /^(查詢|我要查詢)\s+.+/,
+            cancel: /^:Y$/
         };
     }
 
@@ -26,6 +28,12 @@ class TextMessageHandler{
         }
         else if (event.message.type === 'location') {
             this.processNotification(event);
+        }
+        else if (this._pattern.cancel.test(event.message.text)) {
+            this.cancelNotification(event);
+        }
+        else {
+            this.checkToCompleteNotification(event);
         }
     }
 
@@ -85,6 +93,10 @@ class TextMessageHandler{
             });
     }
 
+    /**
+     * Create new notification with drug name
+     * @param {*} event 
+     */
     processNotificationDrug(event) {
         const token = this.getToken(event);
         const output = event.message.text.substring(event.message.text.match(this._keywords.notify)[0].length);
@@ -113,6 +125,33 @@ class TextMessageHandler{
                     event.reply('設定通報失敗');
                 });
         }
+    }
+
+    checkToCompleteNotification(event) {
+        const token = this.getToken(event);
+        Notification.findOne({ token: token })
+            .then(() => {
+                event.reply({
+                    "type": "template",
+                    "altText": "確認取消通報",
+                    "template": {
+                        "type": "confirm",
+                        "text": "要取消通報嗎？",
+                        "actions": [
+                            {
+                                "type": "message",
+                                "label": "是的",
+                                "text": ":Y"
+                            },
+                            {
+                                "type": "message",
+                                "label": "不是",
+                                "text": ":N"
+                            }
+                        ]
+                    }
+                });
+            });
     }
 
     /**
