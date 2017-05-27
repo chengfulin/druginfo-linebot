@@ -24,6 +24,6 @@ router.get('/drugimgs', (req, res) => {
         imgs.push(drugsInfo[index][7]['圖片']);
     }
     res.json(imgs);
-})
+});
 
 module.exports = router;
