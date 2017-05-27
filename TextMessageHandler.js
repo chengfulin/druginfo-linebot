@@ -1,5 +1,5 @@
-var fetch = require('node-fetch');
 const drugsInfo = require('./drugs.json');
+const base64 = require('node-base64-image');
 
 class TextMessageHandler{
     constructor() {
@@ -48,6 +48,9 @@ class TextMessageHandler{
                 info = drugsInfo[index][6]['說明'];
                 foundDrugName = drugsInfo[index][1]['藥物名稱'];
                 foundDrugImg = encodeURI(drugsInfo[index][7]['圖片'].split(';')[0]);
+                base64.encode(foundDrugImg, { "string": true, "local": true }, (err, res => {
+                    if (!error) foundDrugImg = res;
+                }));
                 break;
             }
         }
