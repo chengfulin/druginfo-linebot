@@ -54,24 +54,29 @@ class TextMessageHandler{
        
         if (info && info.length > 0)
             // event.reply(info)
+            // event.reply({
+            //     'type': 'template',
+            //     'altText': foundDrugName,
+            //     'template': {
+            //         'type': 'buttons',
+            //         thumbnailImageUrl: foundDrugImg,
+            //         'title': '管制藥品資訊',
+            //         'text': '00',
+            //         'actions': [
+            //             {
+            //                 "type": "uri",
+            //                 "label": "View detail",
+            //                 "uri": "http://example.com/page/123"
+            //             }
+            //         ]
+            //     }
+            // })
             event.reply({
-                'type': 'template',
-                'altText': foundDrugName,
-                'template': {
-                    'type': 'buttons',
-                    thumbnailImageUrl: foundDrugImg,
-                    'title': '管制藥品資訊',
-                    'text': '00',
-                    'actions': [
-                        {
-                            "type": "uri",
-                            "label": "View detail",
-                            "uri": "http://example.com/page/123"
-                        }
-                    ]
-                }
+                "type": "image",
+                "originalContentUrl": foundDrugImg,
+                "previewImageUrl": foundDrugImg
             })
-            .then(() => {
+            .then((data) => {
                 console.log("template success");
             })
             .catch(error => console.log(error.message));
