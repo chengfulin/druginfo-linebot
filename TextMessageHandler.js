@@ -47,7 +47,7 @@ class TextMessageHandler{
             if (names.indexOf(search) !== -1) {
                 info = drugsInfo[index][6]['說明'];
                 foundDrugName = drugsInfo[index][1]['藥物名稱'];
-                foundDrugImg = encodeURI(drugsInfo[index][7]['圖片'].split(';')[0]);
+                foundDrugImg = drugsInfo[index][7]['圖片'].split(';')[0].replace(/\s/g,'%20');
                 break;
             }
         }
