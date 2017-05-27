@@ -14,16 +14,41 @@ router.get('/notification/all', (req, res) => {
         });
 });
 
-const drugsInfo = require('../drugs.json');
-router.get('/drugimgs', (req, res) => {
+const drugInfo = require('../drugs.json');
+router.post('/notification/add', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,DELETE,POST,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Accept');
-    const imgs = [];
-    for (let index = 0; index < drugsInfo.length; ++index) {
-        imgs.push(encodeURI(drugsInfo[index][7]['圖片'].split(';')[0]));
+    if (!req.body.drug || req.body.drug.length === 0) {
+        res.status(500); 
+        res.send({ error: '請輸入藥品名稱' });
+        return;
     }
-    res.json(imgs);
+    let valid = false;
+    for (let index = 0; index < drugInfo.length; ++index) {
+        valid = drugInfo[index][1]['藥品名稱'].indexOf(req.body.drug) === -1;
+        if (!valid) break;
+    }
+    if (!valid) {
+        res.status(500);
+        res.send({ error: '您輸入的藥品名稱未列舉' });
+        return;
+    }
+    let notification = new Notification();
+    notification.latitude = req.body.latitude;
+    notification.longitude = req.body.longitude;
+    notification.drug = req.body.drug;
+    notification.save()
+        .then(() => { 
+            console.log('> create new notification');
+            res.status(200);
+            res.send({ data: notification });
+        })
+        .catch((error) => {
+            console.log(error.message);
+            res.status(500);
+            res.send({ error: '新增通報資料失敗' });
+        });
 });
 
 module.exports = router;
