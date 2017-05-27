@@ -76,7 +76,7 @@ class TextMessageHandler{
                 "altText": "管制藥品資訊",
                 "template": {
                     "type": "buttons",
-                    "thumbnailImageUrl": infoObj[7]['圖片'],
+                    "thumbnailImageUrl": infoObj[7]['圖片'].split(';'),
                     "title": infoObj[1]['藥物名稱'],
                     "text": infoObj[2]['俗名'],
                     "actions": [
