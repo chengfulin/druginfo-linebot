@@ -44,7 +44,7 @@ class TextMessageHandler{
             const names = drugsInfo[index][1]['藥物名稱'] + drugsInfo[index][2]['俗名'];
             if (names.indexOf(search) !== -1) {
                 info = drugsInfo[index][6]['說明'];
-                return false;
+                break;
             }
         }
         if (info && info.length > 0) event.reply(info);
