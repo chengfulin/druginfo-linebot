@@ -32,6 +32,7 @@ router.post('/notification/add', (req, res) => {
         res.status(500).send({ error: '您輸入的藥品名稱未列舉' });
         return;
     }
+    console.log(req.body);
     let notification = new Notification();
     notification.latitude = req.body.latitude;
     notification.longitude = req.body.longitude;
