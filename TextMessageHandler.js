@@ -60,7 +60,13 @@ class TextMessageHandler{
                     // thumbnailImageUrl: foundDrugImg,
                     title: '管制藥品資訊',
                     text: info,
-                    actions: []
+                    actions: [
+                        {
+                            "type": "uri",
+                            "label": "View detail",
+                            "uri": "http://example.com/page/123"
+                        }
+                    ]
                 }
             });
         else event.reply("抱歉！沒有您找的管制藥品。");
