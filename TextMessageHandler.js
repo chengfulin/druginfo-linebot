@@ -20,7 +20,7 @@ class TextMessageHandler{
      * @param {*} event 
      */
     process(event) {
-        console.log('>>> process');
+        console.log(this._pattern.notify.test(event.message.text));
         if (this._pattern.echo.test(event.message.text)) {
             console.log('>>> echo');
             this.processEcho(event);
