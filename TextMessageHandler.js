@@ -53,14 +53,14 @@ class TextMessageHandler{
         }
         if (info && info.length > 0)
             event.reply({
-                type: 'template',
-                altText: foundDrugName,
-                template: {
-                    type: 'buttons',
+                'type': 'template',
+                'altText': foundDrugName,
+                'template': {
+                    'type': 'buttons',
                     // thumbnailImageUrl: foundDrugImg,
-                    title: '管制藥品資訊',
-                    text: info,
-                    actions: [
+                    'title': '管制藥品資訊',
+                    'text': info,
+                    'actions': [
                         {
                             "type": "uri",
                             "label": "View detail",
