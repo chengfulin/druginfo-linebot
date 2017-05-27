@@ -71,7 +71,12 @@ class TextMessageHandler{
         }
         // console.log(foundDrugImg);
         if (info && info.length > 0) {
-            event.reply(info)
+            // event.reply(info)
+            event.reply({
+                "type": "image",
+                "originalContentUrl": "http://imgur.com/a/BEhnF",
+                "previewImageUrl": "http://imgur.com/a/BEhnF"
+            })
                 .then((data) => {
                     console.log(">> template success");
                     console.log(data);
