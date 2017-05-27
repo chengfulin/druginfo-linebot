@@ -123,7 +123,7 @@ class TextMessageHandler{
         }
         else {
             let notification = new Notification();
-            notification.drug = event.message.text;
+            notification.drug = foundDrugName;
             notification.token = token;
             notification.save()
                 .then(() => { 
