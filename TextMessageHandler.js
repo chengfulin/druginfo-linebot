@@ -71,6 +71,7 @@ class TextMessageHandler{
             //         ]
             //     }
             // })
+            console.log(foundDrugImg);
             event.reply({
                 "type": "image",
                 "originalContentUrl": foundDrugImg,
