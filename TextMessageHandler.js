@@ -61,22 +61,47 @@ class TextMessageHandler{
         const output = event.message.text.substring(event.message.text.match(this._keywords.search)[0].length);
         let info = "";
         let foundDrugName = "";
+        let foundDrugImg = "";
+        let infoObj = {};
         for (let index = 0; index < drugsInfo.length; ++index) {
             const names = drugsInfo[index][1]['藥物名稱'] + drugsInfo[index][2]['俗名'];
             if (names.indexOf(output.trim()) !== -1) {
-                info = drugsInfo[index][6]['說明'];
-                foundDrugName = drugsInfo[index][1]['藥物名稱'];
+                infoObj = drugsInfo[index];
                 break;
             }
         }
-        // console.log(foundDrugImg);
         if (info && info.length > 0) {
-            event.reply(info)
-            // event.reply({
-            //     "type": "image",
-            //     "originalContentUrl": "https://i.imgur.com/QobcLhf.jpg",
-            //     "previewImageUrl": "https://i.imgur.com/QobcLhf.jpg"
-            // })
+            event.reply({
+                "type": "template",
+                "altText": "管制藥品資訊",
+                "template": {
+                    "type": "buttons",
+                    "thumbnailImageUrl": infoObj[7]['圖片'],
+                    "title": infoObj[1]['藥物名稱'],
+                    "text": infoObj[2]['俗名'],
+                    "actions": [
+                        {
+                            "type": "postback",
+                            "label": "分級",
+                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&col=分級'
+                        },
+                        {
+                            "type": "postback",
+                            "label": "醫療用途",
+                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&col=醫療用途'
+                        },
+                        {
+                            "type": "postback",
+                            "label": "濫用方式",
+                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&col=濫用方式'
+                        },
+                        {
+                            "type": "postback",
+                            "label": "說明",
+                            "data": 'name=' + infoObj[1]['藥物名稱'] + '&col=說明'
+                        }
+                    ]}
+                })
                 .then((data) => {
                     console.log(">> template success");
                     console.log(data);
