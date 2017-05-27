@@ -20,15 +20,16 @@ class TextMessageHandler{
      * @param {*} event 
      */
     process(event) {
+        console.log('>>> process');
         if (this._pattern.echo.test(event.message.text)) {
             this.processEcho(event);
         }
         else if (this._pattern.notify.test(event.message.text)) {
-            console.log('通報');
+            console.log('>>> 通報');
             this.processNotificationDrug(event);
         }
         else if (this._pattern.search.test(event.message.text)) {
-            console.log('查詢');            
+            console.log('>>> 查詢');            
             this.processDrugInfo(event);
         }
         else if (event.message.type === 'location') {
