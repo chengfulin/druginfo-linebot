@@ -15,7 +15,7 @@ class TextMessageHandler{
      */
     process(event) {
         if (this._pattern.echo.test(event.message.text)) {
-            processEcho(event);
+            this.processEcho(event);
         }
     }
 

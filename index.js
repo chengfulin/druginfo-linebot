@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const linebot = require('linebot');
 const textMessageHandler = require('./TextMessageHandler');
-
+console.log(textMessageHandler.process);
 const bot = linebot({
     channelId: '1517058705',
     channelSecret: 'f2b0bd7ed2faf7f3fcddc58a67306561',
@@ -19,13 +19,14 @@ app.post('/', linebotParser);
 
 // handle message event
 bot.on('message', function (event) {
-    event.reply(event.message.text)
-        .then(function (data) {
-            // success 
-        })
-        .catch(function (error) {
-            // error 
-        });
+    textMessageHandler.process(event);
+    // event.reply(event.message.text)
+    //     .then(function (data) {
+    //         // success 
+    //     })
+    //     .catch(function (error) {
+    //         // error
+    //     });
 });
 
 app.listen(process.env.PORT || 8080, () => {
