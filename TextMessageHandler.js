@@ -47,29 +47,13 @@ class TextMessageHandler{
             if (names.indexOf(search) !== -1) {
                 info = drugsInfo[index][6]['說明'];
                 foundDrugName = drugsInfo[index][1]['藥物名稱'];
-                foundDrugImg = drugsInfo[index][7]['圖片'];
+                foundDrugImg = drugsInfo[index][7]['圖片'].split(';')[0];
                 break;
             }
         }
         console.log(foundDrugName);
         console.log(foundDrugImg);
-        console.log({
-                'type': 'template',
-                'altText': foundDrugName,
-                'template': {
-                    'type': 'buttons',
-                    // thumbnailImageUrl: foundDrugImg,
-                    'title': '管制藥品資訊',
-                    'text': info,
-                    'actions': [
-                        {
-                            "type": "uri",
-                            "label": "View detail",
-                            "uri": "http://example.com/page/123"
-                        }
-                    ]
-                }
-            });
+       
         if (info && info.length > 0)
             event.reply({
                 'type': 'template',
