@@ -6,12 +6,14 @@ class TextMessageHandler{
         this._keywords = {
             notify: /^(通報|我要通報)\s+/,
             search: /^(查詢|我要查詢)\s+/,
-            cancel: /^是的$/
+            cancel: /^是的$/,
+            notCancel: /^不是$/
         };
         this._pattern = {
             notify: /^(通報|我要通報)\s+.+/,
             search: /^(查詢|我要查詢)\s+.+/,
-            cancel: /^是的$/
+            cancel: /^是的$/,
+            notCancel: /^不是$/
         };
     }
 
