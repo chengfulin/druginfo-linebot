@@ -8,7 +8,7 @@ class PostBackHandler {
         const colIndex = parseInt(params[1].split('=')[1]);
         const col = params[2].split('=')[1];
 
-        const replyMsg = "";
+        let replyMsg = "";
         for (let index = 0; index < drugsInfo.length; ++index) {
             if (drugsInfo[index][1]['藥物名稱'] === name) {
                 replyMsg = drugsInfo[index][colIndex][col];
