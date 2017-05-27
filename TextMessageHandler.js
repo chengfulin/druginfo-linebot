@@ -47,7 +47,7 @@ class TextMessageHandler{
             if (names.indexOf(search) !== -1) {
                 info = drugsInfo[index][6]['說明'];
                 foundDrugName = drugsInfo[index][1]['藥物名稱'];
-                foundDrugImg = drugsInfo[index][7]['圖片'].split(';')[0].replace(/\s/g,'%20');
+                foundDrugImg = encodeURIComponent(drugsInfo[index][7]['圖片'].split(';')[0]);
                 break;
             }
         }
@@ -60,7 +60,7 @@ class TextMessageHandler{
                 'altText': foundDrugName,
                 'template': {
                     'type': 'buttons',
-                    'thumbnailImageUrl': 'https://consumer.fda.gov.tw/Files/Drug_Abuse/1/Heroin(%E7%84%A1%E7%AE%A1%E7%AE%A1%E5%B1%80logo)%20-%20%E6%AA%A2%E5%87%BAHeroin_1.jpg',
+                    'thumbnailImageUrl': foundDrugImg,
                     'title': '管制藥品資訊',
                     'text': '00',
                     'actions': [
