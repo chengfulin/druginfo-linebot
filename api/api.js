@@ -20,8 +20,7 @@ router.post('/notification/add', (req, res) => {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,DELETE,POST,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Accept');
     if (!req.body.drug || req.body.drug.length === 0) {
-        res.status(500); 
-        res.send({ error: '請輸入藥品名稱' });
+        res.status(500).send({ error: '請輸入藥品名稱' });
         return;
     }
     let valid = false;
@@ -30,8 +29,7 @@ router.post('/notification/add', (req, res) => {
         if (!valid) break;
     }
     if (!valid) {
-        res.status(500);
-        res.send({ error: '您輸入的藥品名稱未列舉' });
+        res.status(500).send({ error: '您輸入的藥品名稱未列舉' });
         return;
     }
     let notification = new Notification();
@@ -41,13 +39,11 @@ router.post('/notification/add', (req, res) => {
     notification.save()
         .then(() => { 
             console.log('> create new notification');
-            res.status(200);
             res.send({ data: notification });
         })
         .catch((error) => {
             console.log(error.message);
-            res.status(500);
-            res.send({ error: '新增通報資料失敗' });
+            res.status(500).send({ error: '新增通報資料失敗' });
         });
 });
 
