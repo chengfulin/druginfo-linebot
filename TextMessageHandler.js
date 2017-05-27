@@ -42,14 +42,15 @@ class TextMessageHandler{
         let info = "";
         let foundDrugName = "";
         let foundDrugImg = "";
+        let base64img = "";
         for (let index = 0; index < drugsInfo.length; ++index) {
             const names = drugsInfo[index][1]['藥物名稱'] + drugsInfo[index][2]['俗名'];
             if (names.indexOf(search) !== -1) {
                 info = drugsInfo[index][6]['說明'];
                 foundDrugName = drugsInfo[index][1]['藥物名稱'];
                 foundDrugImg = encodeURI(drugsInfo[index][7]['圖片'].split(';')[0]);
-                base64.encode(foundDrugImg, { "string": true, "local": true }, (err, res) => {
-                    if (!err) foundDrugImg = res;
+                base64.encode(foundDrugImg, { "string": true, "local": false }, (err, res) => {
+                    if (!err) base64img = res;
                 });
                 break;
             }
@@ -63,7 +64,7 @@ class TextMessageHandler{
                 'altText': foundDrugName,
                 'template': {
                     'type': 'buttons',
-                    // 'thumbnailImageUrl': foundDrugImg,
+                    'thumbnailImageUrl': base64img,
                     'title': '管制藥品資訊',
                     'text': 'info',
                     'actions': [
