@@ -53,6 +53,23 @@ class TextMessageHandler{
         }
         console.log(foundDrugName);
         console.log(foundDrugImg);
+        console.log({
+                'type': 'template',
+                'altText': foundDrugName,
+                'template': {
+                    'type': 'buttons',
+                    // thumbnailImageUrl: foundDrugImg,
+                    'title': '管制藥品資訊',
+                    'text': info,
+                    'actions': [
+                        {
+                            "type": "uri",
+                            "label": "View detail",
+                            "uri": "http://example.com/page/123"
+                        }
+                    ]
+                }
+            });
         if (info && info.length > 0)
             event.reply({
                 'type': 'template',
