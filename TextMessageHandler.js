@@ -7,13 +7,15 @@ class TextMessageHandler{
             notify: /^(通報|我要通報)\s+/,
             search: /^(查詢|我要查詢)\s+/,
             cancel: /^是的$/,
-            notCancel: /^不是$/
+            notCancel: /^不是$/,
+            help: /^我藥報抱$/
         };
         this._pattern = {
             notify: /^(通報|我要通報)\s+.+/,
             search: /^(查詢|我要查詢)\s+.+/,
             cancel: /^是的$/,
-            notCancel: /^不是$/
+            notCancel: /^不是$/,
+            help: /^我藥報抱$/
         };
     }
 
@@ -22,7 +24,13 @@ class TextMessageHandler{
      * @param {*} event 
      */
     process(event) {
-        if (this._pattern.notify.test(event.message.text)) {
+        if (this._pattern.help.test(event.message.text)) {
+            this.checkToCompleteNotification(event)
+                .then((num) => {
+                    if (num === 0) this.showHelp(event);
+                });
+        }
+        else if (this._pattern.notify.test(event.message.text)) {
             this.checkToCompleteNotification(event)
                 .then((num) => {
                     if (num === 0) this.processNotificationDrug(event);
@@ -192,6 +200,10 @@ class TextMessageHandler{
         return event.source.type === "user"
             ? event.source.userId : event.source.type === "group"
                 ? event.source.groupId : event.source.roomId;
+    }
+
+    showHelp(event) {
+        event.reply('你好！我藥報抱！\n通報濫用藥物情形，請告訴我"通報 藥品名"\n查詢管制藥品資訊，請跟我說"查詢 藥品名/俗名"');
     }
 }
 
