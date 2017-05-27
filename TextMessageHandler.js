@@ -4,12 +4,10 @@ const Notification = require("./app/models/Notification");
 class TextMessageHandler{
     constructor() {
         this._keywords = {
-            echo: /^##\s+/,
             notify: /^(通報|我要通報)\s+/,
             search: /^(查詢|我要查詢)\s+/
         };
         this._pattern = {
-            echo: /^##\s+.+/,
             notify: /^(通報|我要通報)\s+.+/,
             search: /^(查詢|我要查詢)\s+.+/
         };
@@ -20,35 +18,15 @@ class TextMessageHandler{
      * @param {*} event 
      */
     process(event) {
-        console.log('>>> ' + this._pattern.notify);
-        console.log('>>> ' + event.message.text);
-        if (this._pattern.echo.test(event.message.text)) {
-            console.log('>>> echo');
-            this.processEcho(event);
-        }
-        else if (this._pattern.notify.test(event.message.text)) {
-            console.log('>>> 通報');
+        if (this._pattern.notify.test(event.message.text)) {
             this.processNotificationDrug(event);
         }
         else if (this._pattern.search.test(event.message.text)) {
-            console.log('>>> 查詢');            
             this.processDrugInfo(event);
         }
         else if (event.message.type === 'location') {
-            console.log('>>> location');
             this.processNotification(event);
         }
-    }
-
-    processEcho(event) {
-        const output = event.message.text.substring(event.message.text.match(this._keywords.echo)[0].length);
-        event.reply(output.trim())
-        .then(function (data) {
-            // success 
-        })
-        .catch(function (error) {
-            // error 
-        });
     }
 
     /**
