@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require("express-session");
 const morgan = require('morgan');
 const linebot = require('linebot');
 const textMessageHandler = require('./TextMessageHandler');
@@ -16,6 +17,12 @@ const app = express();
 const linebotParser = bot.parser();
 app.use(morgan('dev')); // log every request on console
 app.use(express.static(__dirname + '/public'));
+app.use(session({
+    secret: "𪕜論𪘹蝕和𨗻",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 180000 }
+}));
 
 const apiRouter = require('./api/api');
 app.use('/api', apiRouter);

@@ -1,14 +1,17 @@
 const drugsInfo = require('./drugs.json');
-const base64 = require('node-base64-image');
 const Notification = require("./app/models/Notification");
 
 class TextMessageHandler{
     constructor() {
         this._keywords = {
-            echo: /^##\s+/
+            echo: /^##\s+/,
+            notify: /^[通報|我要通報]\s+/,
+            search: /^[查詢|我要查詢]\s+/
         };
         this._pattern = {
-            echo: /^##\s+.+/
+            echo: /^##\s+.+/,
+            notify: /^[通報|我要通報]\s+.+/,
+            search: /^[查詢|我要查詢]\s+.+/
         };
     }
 
@@ -20,7 +23,10 @@ class TextMessageHandler{
         if (this._pattern.echo.test(event.message.text)) {
             this.processEcho(event);
         }
-        else if (event.message.type === 'text') {
+        else if (this._pattern.notify.test(event.message.text)) {
+            this.processNotificationDrug(event);
+        }
+        else if (this._pattern.search.test(event.message.text)) {
             this.processDrugInfo(event);
         }
         else if (event.message.type === 'location') {
@@ -44,16 +50,17 @@ class TextMessageHandler{
      * @param {*} event 
      */
     processDrugInfo(event) {
+        const output = event.message.text.substring(event.message.text.match(this._keywords.search)[0].length);
         let info = "";
         let foundDrugName = "";
         for (let index = 0; index < drugsInfo.length; ++index) {
             const names = drugsInfo[index][1]['藥物名稱'] + drugsInfo[index][2]['俗名'];
-            if (names.indexOf(event.message.text.trim()) !== -1) {
+            if (names.indexOf(output.trim()) !== -1) {
                 info = drugsInfo[index][6]['說明'];
                 foundDrugName = drugsInfo[index][1]['藥物名稱'];
                 break;
             }
-        };
+        }
         // console.log(foundDrugImg);
         if (info && info.length > 0) {
             event.reply(info)
@@ -71,20 +78,83 @@ class TextMessageHandler{
      * @param {*} event 
      */
     processNotification(event) {
-        let notification = new Notification();
-        notification.time = new Date(event.timestamp);
-        notification.address = event.message.address || "";
-        notification.latitude = event.message.latitude;
-        notification.longitude = event.message.longitude;
-        notification.save()
-            .then(() => {
-                console.log('> new notification');
-                event.reply('通報成功');
+        const token = this.getToken(event);
+        Notification.findOne({ token: token })
+            .then((notification) => {
+                notification.time = new Date(event.timestamp);
+                notification.address = event.message.address || "";
+                notification.latitude = event.message.latitude;
+                notification.longitude = event.message.longitude;
+                notification.token = null;
+                notification.save()
+                    .then(() => {
+                        console.log('> save notification');
+                        event.reply('通報成功');
+                    })
+                    .catch((error) => {
+                        console.log(error.message);
+                        event.reply('通報失敗');
+                    });
             })
-            .catch((error) => {
-                console.log(error.message);
-                event.reply('通報失敗');
+            .catch(() => {
+                // no such document
             });
+    }
+
+    processNotificationDrug(event) {
+        const token = this.getToken(event);
+        const output = event.message.text.substring(event.message.text.match(this._keywords.notify)[0].length);
+        let foundDrugName = "";
+        for (let index = 0; index < drugsInfo.length; ++index) {
+            const names = drugsInfo[index][1]['藥物名稱'];
+            if (names.indexOf(output.trim()) !== -1) {
+                foundDrugName = drugsInfo[index][1]['藥物名稱'];
+                break;
+            }
+        }
+        if (foundDrugName.length === 0) {
+            event.reply('請輸入正確的藥品名稱。');
+        }
+        else {
+            let notification = new Notification();
+            notification.drug = event.message.text;
+            notification.token = token;
+            notification.save()
+                .then(() => { 
+                    console.log('> new notification');
+                    event.reply('請在左下角"+"號，選擇通報位置資訊。');
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                    event.reply('設定通報失敗');
+                });
+        }
+    }
+
+    /**
+     * To cancel notification
+     * @param {*} event 
+     */
+    cancelNotification(event) {
+        const token = this.getToken(event);
+        Notification.findOneAndRemove({ token: token })
+            .then((notification) => {
+                console.log('> cancel creating notification');
+                event.reply('取消通報。');
+            })
+            .then((error) => {
+                console.log(error.message);
+            });
+    }
+
+    /**
+     * Get token to identify creating notification
+     * @param {*} event 
+     */
+    getToken(event) {
+        return event.source.type === "user"
+            ? event.source.userId : event.source.type === "group"
+                ? event.source.groupId : event.source.roomId;
     }
 }
 

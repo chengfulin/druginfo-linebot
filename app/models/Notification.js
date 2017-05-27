@@ -1,12 +1,13 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var NotificationSchema = new Schema({
-    time: { type: Date, "default": Date.now },
+    time: { type: Date, 'default': Date.now },
     address: { type: String },
-    latitude: { type: Number, required: true },
-    longitude: { type: Number, required: true },
+    latitude: { type: Number, required: true, 'default': 0.0 },
+    longitude: { type: Number, required: true, 'default': 0.0 },
+    drug: { type: String, required: true },
     token: { type: String }
 });
 
-module.exports = mongoose.model("Notification", NotificationSchema);
+module.exports = mongoose.model('Notification', NotificationSchema);
