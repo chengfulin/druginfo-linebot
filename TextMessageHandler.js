@@ -51,17 +51,18 @@ class TextMessageHandler{
                 break;
             }
         }
-        if (info && info.length > 0) event.reply({
-            type: 'template',
-            altText: foundDrugName,
-            template: {
-                type: 'buttons',
-                thumbnailImageUrl: foundDrugImg,
-                title: '管制藥品資訊',
-                text: info,
-                actions: []
-            }
-        });
+        if (info && info.length > 0)
+            event.reply({
+                type: 'template',
+                altText: foundDrugName,
+                template: {
+                    type: 'buttons',
+                    // thumbnailImageUrl: foundDrugImg,
+                    title: '管制藥品資訊',
+                    text: info,
+                    actions: []
+                }
+            });
         else event.reply("抱歉！沒有您找的管制藥品。");
     }
 }
