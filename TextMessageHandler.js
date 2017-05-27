@@ -53,7 +53,7 @@ class TextMessageHandler{
         };
         // console.log(foundDrugImg);
         if (info && info.length > 0) {
-            // event.reply(info)
+            event.reply(info)
             // event.reply({
             //     'type': 'template',
             //     'altText': foundDrugName,
@@ -64,11 +64,11 @@ class TextMessageHandler{
             //         'actions': []
             //     }
             // })
-            event.reply({
-                "type": "image",
-                "originalContentUrl": foundDrugImg,
-                "previewImageUrl": foundDrugImg
-            })
+            // event.reply({
+            //     "type": "image",
+            //     "originalContentUrl": foundDrugImg,
+            //     "previewImageUrl": foundDrugImg
+            // })
             .then((data) => {
                 console.log(">> template success");
                 console.log(data);
