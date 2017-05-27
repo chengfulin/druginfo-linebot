@@ -71,7 +71,11 @@ class TextMessageHandler{
                         }
                     ]
                 }
-            });
+            })
+            .then(() => {
+                console.log("template success");
+            })
+            .catch(error => console.log(error.message));
         else event.reply("抱歉！沒有您找的管制藥品。");
     }
 }
