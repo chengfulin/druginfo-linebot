@@ -1,4 +1,5 @@
-var fetch = require("node-fetch");
+var fetch = require('node-fetch');
+const drugsInfo = require('./drugs.json');
 
 class TextMessageHandler{
     constructor() {
@@ -38,23 +39,16 @@ class TextMessageHandler{
 
     processDrugInfo(event) {
         const search = event.message.text.substring(event.message.text.match(this._keywords.drugInfo)[0].length);
-        fetch('http://data.fda.gov.tw/cacheData/50_3.json', { headers: { 'Content-Type': 'application/json' } })
-            .then((data) => {
-                const info = "";
-                data.forEach((drug) => {
-                    const names = drug[1]['藥物名稱'] + drug[2]['俗名'];
-                    if (names.indexOf(search) !== -1) {
-                        info = drug[6]['說明'];
-                        return false;
-                    }
-                });
-                return info;
-            })
-            .then((info) => {
-                if (!info || info.length === 0) return;
-                event.reply(info);
-            })
-            .catch(error => console.log(error.message));
+        const info = "";
+        drugsInfo.forEach((drug) => {
+            const names = drug[1]['藥物名稱'] + drug[2]['俗名'];
+            if (names.indexOf(search) !== -1) {
+                info = drug[6]['說明'];
+                return false;
+            }
+        });
+        if (info && info.length > 0) event.reply(info);
+        else event.reply("no such drug");
     }
 }
 
