@@ -203,7 +203,7 @@ class TextMessageHandler{
     }
 
     showHelp(event) {
-        event.reply('你好！我藥報抱！\n通報濫用藥物情形\n請告訴我"通報 藥品名"\n查詢管制藥品資訊\n請跟我說"查詢 藥品名/俗名"');
+        event.reply('你好！我藥報抱！\n通報濫用藥物情形\n請告訴我"通報  藥品名"\n查詢管制藥品資訊\n請跟我說"查詢  藥品名"');
     }
 }
 
