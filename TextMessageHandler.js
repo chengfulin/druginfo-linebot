@@ -168,8 +168,8 @@ class TextMessageHandler{
      */
     cancelNotification(event) {
         const token = this.getToken(event);
-        Notification.findOneAndRemove({ token: token })
-            .then((notification) => {
+        Notification.findAndRemove({ token: token })
+            .then(() => {
                 console.log('> cancel creating notification');
                 event.reply('取消通報。');
             })
