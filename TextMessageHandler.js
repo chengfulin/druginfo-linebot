@@ -77,7 +77,8 @@ class TextMessageHandler{
                 "previewImageUrl": foundDrugImg
             })
             .then((data) => {
-                console.log("template success");
+                console.log(">> template success");
+                console.log(data);
             })
             .catch(error => console.log(error.message));
         else event.reply("抱歉！沒有您找的管制藥品。");
