@@ -30,7 +30,7 @@ class TextMessageHandler{
 
     processEcho(event) {
         const output = event.message.text.substring(event.message.text.match(this._keywords.echo)[0].length);
-        event.reply(event.message.text)
+        event.reply(output.trim())
         .then(function (data) {
             // success 
         })
@@ -39,12 +39,16 @@ class TextMessageHandler{
         });
     }
 
+    /**
+     * 查詢藥品資訊
+     * @param {*} event 
+     */
     processDrugInfo(event) {
         let info = "";
         let foundDrugName = "";
         for (let index = 0; index < drugsInfo.length; ++index) {
             const names = drugsInfo[index][1]['藥物名稱'] + drugsInfo[index][2]['俗名'];
-            if (names.indexOf(event.message.text) !== -1) {
+            if (names.indexOf(event.message.text.trim()) !== -1) {
                 info = drugsInfo[index][6]['說明'];
                 foundDrugName = drugsInfo[index][1]['藥物名稱'];
                 break;
@@ -62,6 +66,10 @@ class TextMessageHandler{
         else event.reply("抱歉！沒有您找的管制藥品。");
     }
 
+    /**
+     * 通報位置
+     * @param {*} event 
+     */
     processNotification(event) {
         let notification = new Notification();
         notification.time = new Date(event.timestamp);
