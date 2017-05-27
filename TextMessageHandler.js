@@ -62,7 +62,7 @@ class TextMessageHandler{
                     'type': 'buttons',
                     // 'thumbnailImageUrl': foundDrugImg,
                     'title': '管制藥品資訊',
-                    'text': info,
+                    'text': 'info',
                     'actions': [
                         {
                             "type": "uri",
