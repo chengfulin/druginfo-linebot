@@ -14,7 +14,7 @@ router.get('/notification/all', (req, res) => {
         });
 });
 
-const drugsInfo = require('./drugs.json');
+const drugsInfo = require('../drugs.json');
 router.get('/drugimgs', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,DELETE,POST,OPTIONS');
