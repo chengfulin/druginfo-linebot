@@ -6,12 +6,12 @@ class TextMessageHandler{
         this._keywords = {
             notify: /^(通報|我要通報)\s+/,
             search: /^(查詢|我要查詢)\s+/,
-            cancel: /^:Y$/
+            cancel: /^是的$/
         };
         this._pattern = {
             notify: /^(通報|我要通報)\s+.+/,
             search: /^(查詢|我要查詢)\s+.+/,
-            cancel: /^:Y$/
+            cancel: /^是的$/
         };
     }
 
@@ -127,6 +127,10 @@ class TextMessageHandler{
         }
     }
 
+    /**
+     * Check whether complete the notification or not
+     * @param {*} event 
+     */
     checkToCompleteNotification(event) {
         const token = this.getToken(event);
         Notification.findOne({ token: token })
@@ -141,12 +145,12 @@ class TextMessageHandler{
                             {
                                 "type": "message",
                                 "label": "是的",
-                                "text": ":Y"
+                                "text": "是的"
                             },
                             {
                                 "type": "message",
                                 "label": "不是",
-                                "text": ":N"
+                                "text": "不是"
                             }
                         ]
                     }
@@ -165,7 +169,7 @@ class TextMessageHandler{
                 console.log('> cancel creating notification');
                 event.reply('取消通報。');
             })
-            .then((error) => {
+            .catch((error) => {
                 console.log(error.message);
             });
     }
