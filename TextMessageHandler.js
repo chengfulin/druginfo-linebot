@@ -24,9 +24,11 @@ class TextMessageHandler{
             this.processEcho(event);
         }
         else if (this._pattern.notify.test(event.message.text)) {
+            console.log('通報');
             this.processNotificationDrug(event);
         }
         else if (this._pattern.search.test(event.message.text)) {
+            console.log('查詢');            
             this.processDrugInfo(event);
         }
         else if (event.message.type === 'location') {
