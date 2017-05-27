@@ -71,12 +71,12 @@ class TextMessageHandler{
         }
         // console.log(foundDrugImg);
         if (info && info.length > 0) {
-            // event.reply(info)
-            event.reply({
-                "type": "image",
-                "originalContentUrl": "https://i.imgur.com/QobcLhf.jpg",
-                "previewImageUrl": "https://i.imgur.com/QobcLhf.jpg"
-            })
+            event.reply(info)
+            // event.reply({
+            //     "type": "image",
+            //     "originalContentUrl": "https://i.imgur.com/QobcLhf.jpg",
+            //     "previewImageUrl": "https://i.imgur.com/QobcLhf.jpg"
+            // })
                 .then((data) => {
                     console.log(">> template success");
                     console.log(data);
