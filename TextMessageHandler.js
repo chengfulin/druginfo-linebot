@@ -104,7 +104,6 @@ class TextMessageHandler{
     processNotificationDrug(event) {
         const token = this.getToken(event);
         const output = event.message.text.substring(event.message.text.match(this._keywords.notify)[0].length);
-        console.log(output);
         let foundDrugName = "";
         for (let index = 0; index < drugsInfo.length; ++index) {
             const names = drugsInfo[index][1]['藥物名稱'];
