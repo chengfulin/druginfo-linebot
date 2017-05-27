@@ -60,14 +60,14 @@ class TextMessageHandler{
                 'altText': foundDrugName,
                 'template': {
                     'type': 'buttons',
-                    'thumbnailImageUrl': foundDrugImg,
+                    // 'thumbnailImageUrl': foundDrugImg,
                     'title': '管制藥品資訊',
-                    'text': '00',
+                    'text': info,
                     'actions': [
                         {
                             "type": "uri",
                             "label": "View detail",
-                            "uri": "http://example.com/page/123"
+                            "uri": foundDrugImg
                         }
                     ]
                 }
