@@ -74,8 +74,8 @@ class TextMessageHandler{
             // event.reply(info)
             event.reply({
                 "type": "image",
-                "originalContentUrl": "http://imgur.com/a/BEhnF",
-                "previewImageUrl": "http://imgur.com/a/BEhnF"
+                "originalContentUrl": "https://imgur.com/a/BEhnF",
+                "previewImageUrl": "https://imgur.com/a/BEhnF"
             })
                 .then((data) => {
                     console.log(">> template success");
