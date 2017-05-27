@@ -22,6 +22,7 @@ class TextMessageHandler{
     process(event) {
         console.log('>>> process');
         if (this._pattern.echo.test(event.message.text)) {
+            console.log('>>> echo');
             this.processEcho(event);
         }
         else if (this._pattern.notify.test(event.message.text)) {
@@ -33,6 +34,7 @@ class TextMessageHandler{
             this.processDrugInfo(event);
         }
         else if (event.message.type === 'location') {
+            console.log('>>> location');
             this.processNotification(event);
         }
     }
