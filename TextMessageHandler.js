@@ -23,10 +23,16 @@ class TextMessageHandler{
      */
     process(event) {
         if (this._pattern.notify.test(event.message.text)) {
-            this.processNotificationDrug(event);
+            this.checkToCompleteNotification(event)
+                .then((num) => {
+                    if (num === 0) this.processNotificationDrug(event);
+                });
         }
         else if (this._pattern.search.test(event.message.text)) {
-            this.processDrugInfo(event);
+            this.checkToCompleteNotification(event)
+                .then((num) => {
+                    if (num === 0) this.processDrugInfo(event);
+                });
         }
         else if (event.message.type === 'location') {
             this.processNotification(event);
@@ -44,7 +50,6 @@ class TextMessageHandler{
      * @param {*} event 
      */
     processDrugInfo(event) {
-        this.checkToCompleteNotification(event);
         const output = event.message.text.substring(event.message.text.match(this._keywords.search)[0].length);
         let info = "";
         let foundDrugName = "";
@@ -101,7 +106,6 @@ class TextMessageHandler{
      * @param {*} event 
      */
     processNotificationDrug(event) {
-        this.checkToCompleteNotification(event);
         const token = this.getToken(event);
         const output = event.message.text.substring(event.message.text.match(this._keywords.notify)[0].length);
         let foundDrugName = "";
@@ -137,28 +141,30 @@ class TextMessageHandler{
      */
     checkToCompleteNotification(event) {
         const token = this.getToken(event);
-        Notification.findOne({ token: token })
-            .then(() => {
-                event.reply({
-                    "type": "template",
-                    "altText": "確認取消通報",
-                    "template": {
-                        "type": "confirm",
-                        "text": "要取消通報嗎？",
-                        "actions": [
-                            {
-                                "type": "message",
-                                "label": "是的",
-                                "text": "是的"
-                            },
-                            {
-                                "type": "message",
-                                "label": "不是",
-                                "text": "不是"
-                            }
-                        ]
-                    }
-                });
+        return Notification.count({ token: token })
+            .then((num) => {
+                if (num > 0)
+                    event.reply({
+                        "type": "template",
+                        "altText": "確認取消通報",
+                        "template": {
+                            "type": "confirm",
+                            "text": "要取消通報嗎？",
+                            "actions": [
+                                {
+                                    "type": "message",
+                                    "label": "是的",
+                                    "text": "是的"
+                                },
+                                {
+                                    "type": "message",
+                                    "label": "不是",
+                                    "text": "不是"
+                                }
+                            ]
+                        }
+                    });
+                return num;
             });
     }
 
@@ -168,7 +174,7 @@ class TextMessageHandler{
      */
     cancelNotification(event) {
         const token = this.getToken(event);
-        Notification.findAndRemove({ token: token })
+        Notification.deleteMany({ token: token })
             .then(() => {
                 console.log('> cancel creating notification');
                 event.reply('取消通報。');
