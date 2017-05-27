@@ -51,8 +51,8 @@ class TextMessageHandler{
                 break;
             }
         }
-       
-        if (info && info.length > 0)
+        console.log(foundDrugImg);
+        if (info && info.length > 0) {
             // event.reply(info)
             // event.reply({
             //     'type': 'template',
@@ -71,7 +71,6 @@ class TextMessageHandler{
             //         ]
             //     }
             // })
-            console.log(foundDrugImg);
             event.reply({
                 "type": "image",
                 "originalContentUrl": foundDrugImg,
@@ -82,6 +81,7 @@ class TextMessageHandler{
                 console.log(data);
             })
             .catch(error => console.log(error.message));
+        }
         else event.reply("抱歉！沒有您找的管制藥品。");
     }
 }
