@@ -62,7 +62,7 @@ class TextMessageHandler{
         let info = "";
         let foundDrugName = "";
         let foundDrugImg = "";
-        let infoObj = {};
+        let infoObj = null;
         for (let index = 0; index < drugsInfo.length; ++index) {
             const names = drugsInfo[index][1]['藥物名稱'] + drugsInfo[index][2]['俗名'];
             if (names.indexOf(output.trim()) !== -1) {
@@ -70,7 +70,7 @@ class TextMessageHandler{
                 break;
             }
         }
-        if (info && info.length > 0) {
+        if (infoObj) {
             event.reply({
                 "type": "template",
                 "altText": "管制藥品資訊",
