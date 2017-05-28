@@ -17,11 +17,12 @@ const linebotParser = bot.parser();
 app.use(morgan('dev')); // log every request on console
 app.use(express.static(__dirname + '/public'));
 
+app.post('/', linebotParser);
 const apiRouter = require('./api/api');
 app.use(bodyParser.urlencoded({ extended: true })); // parsing application/x-www-form-urlencoded
 app.use(bodyParser.json())
 app.use('/api', apiRouter);
-app.post('/', linebotParser);
+
 
 // handle message event
 const textMessageHandler = require('./TextMessageHandler');
