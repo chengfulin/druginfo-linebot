@@ -27,7 +27,7 @@ router.post('/notification/add', (req, res) => {
     let valid = false;
     for (let index = 0; index < drugInfo.length; ++index) {
         valid = drugInfo[index][1]['藥物名稱'].indexOf(req.body.drug) !== -1;
-        if (!valid) break;
+        if (valid) break;
     }
     if (!valid) {
         res.status(500).json({ error: '您輸入的藥品名稱未列舉' });
