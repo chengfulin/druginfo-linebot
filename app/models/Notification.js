@@ -7,7 +7,7 @@ var NotificationSchema = new Schema({
     latitude: { type: Number, required: true, 'default': 0.0 },
     longitude: { type: Number, required: true, 'default': 0.0 },
     drug: { type: String, required: true },
-    token: { type: String, 'default': null }
+    token: { type: String }
 });
 
 module.exports = mongoose.model('Notification', NotificationSchema);

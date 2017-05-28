@@ -11,7 +11,7 @@ class PostBackHandler {
         let replyMsg = "";
         for (let index = 0; index < drugsInfo.length; ++index) {
             if (drugsInfo[index][1]['藥物名稱'] === name) {
-                replyMsg = col + '\n' + drugsInfo[index][colIndex][col];
+                replyMsg = '<' + drugsInfo[index][1]['藥物名稱'] + '>' + col + '\n' + drugsInfo[index][colIndex][col];
                 break;
             }
         }

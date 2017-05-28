@@ -5,7 +5,7 @@ router.get('/notification/all', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,DELETE,POST,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Accept');
-    Notification.find().where('token', null)
+    Notification.find({})
         .then((notifications) => {
             res.json({ notifications: notifications });
         })
@@ -26,10 +26,9 @@ router.post('/notification/add', (req, res) => {
     }
     let valid = false;
     for (let index = 0; index < drugInfo.length; ++index) {
-        valid = drugInfo[index][1]['藥物名稱'].indexOf(req.body.drug) !== -1;
-        if (valid) break;
+        valid = drugInfo[index][1]['藥物名稱'].indexOf(req.body.drug) === -1;
+        if (!valid) break;
     }
-    console.log(req.body.drug);
     if (!valid) {
         res.status(500).json({ error: '您輸入的藥品名稱未列舉' });
         return;
