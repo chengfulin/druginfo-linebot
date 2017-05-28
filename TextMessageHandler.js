@@ -212,14 +212,16 @@ class TextMessageHandler{
      */
     cancelNotification(event) {
         const token = this.getToken(event);
-        Notification.deleteMany({ token: token })
-            .then(() => {
-                console.log('> cancel creating notification');
-                event.reply('取消通報。');
+        Notification.count({ token: token })
+            .then((num) => {
+                if (num === 0) return;
+                Notification.deleteMany({ token: token })
+                    .then(() => {
+                        console.log('> cancel creating notification');
+                        event.reply('取消通報。');
+                    });
             })
-            .catch((error) => {
-                console.log(error.message);
-            });
+            .catch(error => console.log(error.message));
     }
 
     /**
