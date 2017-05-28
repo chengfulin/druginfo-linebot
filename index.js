@@ -21,6 +21,7 @@ const apiRouter = require('./api/api');
 app.use('/api', apiRouter);
 app.post('/', linebotParser);
 app.use(bodyParser.urlencoded({ extended: true })); // parsing application/x-www-form-urlencoded
+app.use(bodyParser.json())
 
 // handle message event
 const textMessageHandler = require('./TextMessageHandler');
