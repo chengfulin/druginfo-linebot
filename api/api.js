@@ -19,7 +19,7 @@ router.post('/notification/add', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,DELETE,POST,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Accept');
-    console.log(req.body.drug);
+    console.log(req.body);
     if (!req.body.drug || req.body.drug.length === 0) {
         res.status(500).json({ error: '請輸入藥品名稱' });
         return;
