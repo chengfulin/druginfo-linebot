@@ -119,6 +119,10 @@ class TextMessageHandler{
         const token = this.getToken(event);
         Notification.findOne({ token: token })
             .then((notification) => {
+                if (!notification) {
+                    event.reply('無此通報資訊');
+                    return;
+                }
                 notification.time = new Date(event.timestamp);
                 notification.address = event.message.address || "";
                 notification.latitude = event.message.latitude;
@@ -128,14 +132,11 @@ class TextMessageHandler{
                     .then(() => {
                         console.log('> save notification');
                         event.reply('通報成功');
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                        event.reply('通報失敗');
                     });
             })
-            .catch(() => {
-                // no such document
+            .catch((error) => {
+                console.log(error.message);
+                event.reply('通報失敗');
             });
     }
 
