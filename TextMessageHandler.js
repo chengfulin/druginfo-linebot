@@ -244,16 +244,25 @@ class TextMessageHandler{
         event.reply('你好！我藥報抱！\n通報濫用藥物情形\n請告訴我"通報  藥品名"\n查詢管制藥品資訊\n請跟我說"查詢  藥品名"');
     }
 
+    /**
+     * process image message
+     * @param {*} event 
+     */
     processDrugImage(event) {
         event.message.content()
             .then((content) => {
                 // const imageData = content.toString('base64');
-                this.detectImg(content);
+                this.detectImg(event, content);
             })
             .catch(error => console.log(error));
     }
 
-    detectImg(imageData) {
+    /**
+     * detect image
+     * @param {*} event 
+     * @param {*} imageData 
+     */
+    detectImg(event, imageData) {
         // var matches = imageData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
         //     response = {};
 
