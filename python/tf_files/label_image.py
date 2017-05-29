@@ -1,5 +1,4 @@
 import os, sys
-sys.path.insert(0, '../../python/tf_files')
 import tensorflow as tf
 import base64
 
