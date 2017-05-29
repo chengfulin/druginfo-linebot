@@ -13,14 +13,14 @@ class DrugDetection {
         //     // results is an array consisting of messages collected during execution
         //     console.log('results: %j', results);
         // });
-        const py = spawn('python', ['./python/tf_files/label_image.py', 'morphine.jpg']);
+        const py = spawn('python', ['./python/tf_files/label_image.py']);
         py.stdout.on('data', (data) => {
-            console.log('>> on data');
+            console.log('>> on data: ' + data);
         });
         py.stdout.on('end', () => {
             console.log('>> on end');
         });
-        py.stdin.write('');
+        py.stdin.write('morphine.jpg');
         py.stdin.end();
     }
 }

@@ -8,7 +8,8 @@ tmp = 0
 result = ""
 
 # change this as you see fit
-image_path = sys.argv[1]
+# image_path = sys.argv[1]
+image_path = sys.stdin.readlines()[0]
 
 # Read in the image_data
 image_data = tf.gfile.FastGFile(image_path, 'rb').read()
@@ -41,7 +42,7 @@ with tf.Session() as sess:
           result = human_string
         # print('%s (score = %.5f)' % (human_string, score))
 
-    print(human_string)
-
+    # print(human_string)
+    print human_string
 
 
