@@ -1,5 +1,5 @@
 import os, sys
-sys.path.insert(0, '/python/tf_files')
+sys.path.insert(0, './python/tf_files')
 import tensorflow as tf
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -9,7 +9,6 @@ result = ""
 
 # change this as you see fit
 image_path = sys.argv[1]
-print(image_path)
 
 # Read in the image_data
 image_data = tf.gfile.FastGFile(image_path, 'rb').read()
