@@ -5,7 +5,7 @@ import base64
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 tmp = 0
-result = ""
+result = "無可辨識之結果"
 
 # change this as you see fit
 # image_path = sys.argv[1]
@@ -42,5 +42,5 @@ with tf.Session() as sess:
           result = human_string
         # print('%s (score = %.5f)' % (human_string, score))
 
-    print(human_string)
+    print(result)
 
