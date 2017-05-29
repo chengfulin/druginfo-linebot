@@ -1,5 +1,5 @@
 import os, sys
-
+sys.path.insert('/python/tf_files')
 import tensorflow as tf
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
