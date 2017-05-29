@@ -15,12 +15,12 @@ class DrugDetection {
         // });
         const py = spawn('python', ['./python/tf_files/label_image.py', 'morphine.jpg']);
         py.stdout.on('data', (data) => {
-            dataString += data.toString();
+            console.log('>> on data');
         });
         py.stdout.on('end', () => {
-            console.log('Sum of numbers=',dataString);
+            console.log('>> on end');
         });
-        py.stdin.write(JSON.stringify(data));
+        py.stdin.write('');
         py.stdin.end();
     }
 }
