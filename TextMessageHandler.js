@@ -1,6 +1,7 @@
 const drugsInfo = require('./drugs.json');
 const Notification = require("./app/models/Notification");
 const exec = require('child_process').exec;
+const fs = require('fs');
 
 class TextMessageHandler{
     constructor() {
@@ -247,15 +248,37 @@ class TextMessageHandler{
         event.message.content()
             .then((content) => {
                 const imageData = content.toString('base64');
-                exec(`python ./python/tf_files/label_image.py ${imageData}`, (error, stdout, stderr) => {
-                    if (error) {
-                        throw new Error('>> detect failed');
-                    } else {
-                        event.reply(`辨識結果: ${stdout}`);
-                    }
-                });
+                this.detectImg(imageData);
             })
             .catch(error => console.log(error));
+    }
+
+    detectImg(imageData) {
+        var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+            response = {};
+
+        if (matches.length !== 3) {
+            return new Error('Invalid input string');
+        }
+
+        response.type = matches[1];
+        response.data = new Buffer(matches[2], 'base64');
+
+        const tempFileName = `${Date.now()}.${response.type}`;
+        fs.writeFile(`${Date.now()}.${response.type}`, response.data, (error) => {
+            if (error) throw error;
+            exec(`python ./python/tf_files/label_image.py ${tempFileName}`, (error, stdout, stderr) => {
+                if (error) {
+                    throw new Error('>> detect failed');
+                } else {
+                    event.reply(`辨識結果: ${stdout}`);
+                    fs.unlink(tempFileName, (err) => {
+                        if (err) throw err;
+                        console.log('>> successfully delete temp file');
+                    });
+                }
+            });
+        });
     }
 }
 
