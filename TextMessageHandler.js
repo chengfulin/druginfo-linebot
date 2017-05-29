@@ -247,14 +247,14 @@ class TextMessageHandler{
     processDrugImage(event) {
         event.message.content()
             .then((content) => {
+                console.log(/^data:([A-Za-z-+\/]+);base64,(.+)$/.test(content));
                 const imageData = content.toString('base64');
-                this.detectImg(imageData);
+                // this.detectImg(imageData);
             })
             .catch(error => console.log(error));
     }
 
     detectImg(imageData) {
-        console.log(imageData);
         var matches = imageData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
             response = {};
 
