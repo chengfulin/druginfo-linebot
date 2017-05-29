@@ -249,7 +249,7 @@ class TextMessageHandler{
                 const imageData = content.toString('base64');
                 exec(`python ./python/tf_files/label_image.py ${imageData}`, (error, stdout, stderr) => {
                     if (error) {
-                        throw error;
+                        throw new Error('>> detect failed');
                     } else {
                         event.reply(`辨識結果: ${stdout}`);
                     }
