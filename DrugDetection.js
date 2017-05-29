@@ -1,5 +1,4 @@
 const spawn = require('child_process').spawn;
-const py = spawn('python', ['./python/tf_files/label_image.py', 'morphine.jpg']);
 
 class DrugDetection {
 
