@@ -247,7 +247,7 @@ class TextMessageHandler{
     processDrugImage(event) {
         event.message.content()
             .then((content) => {
-                console.log(/^data:([A-Za-z-+\/]+);base64,(.+)$/.test(content));
+                console.log(content);
                 const imageData = content.toString('base64');
                 // this.detectImg(imageData);
             })
