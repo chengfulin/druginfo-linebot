@@ -264,8 +264,8 @@ class TextMessageHandler{
         // response.type = matches[1];
         // response.data = new Buffer(matches[2], 'base64');
 
-        const tempFileName = `${Date.now()}`;
-        fs.writeFile(`${Date.now()}`, imageData, (error) => {
+        const tempFileName = `./tempimgs/${Date.now()}`;
+        fs.writeFile(tempFileName, imageData, (error) => {
             if (error) throw error;
             exec(`python ./python/tf_files/label_image.py ${tempFileName}`, (error, stdout, stderr) => {
                 if (error) {
