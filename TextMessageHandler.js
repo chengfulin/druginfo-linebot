@@ -255,7 +255,7 @@ class TextMessageHandler{
                     }
                 });
             })
-            .catch(error => console.log(error.mesage));
+            .catch(error => console.log(error));
     }
 }
 
