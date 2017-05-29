@@ -24,7 +24,7 @@ app.use(bodyParser.json())
 app.use('/api', apiRouter);
 app.get('/trydetect', (req, res) => {
     const detector = require('./DrugDetection');
-    detector.process();
+    detector.process(res);
 });
 
 // handle message event
