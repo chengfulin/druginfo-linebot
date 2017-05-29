@@ -42,7 +42,5 @@ with tf.Session() as sess:
           result = human_string
         # print('%s (score = %.5f)' % (human_string, score))
 
-    # print(human_string)
-    print human_string
-
+    print(human_string)
 
