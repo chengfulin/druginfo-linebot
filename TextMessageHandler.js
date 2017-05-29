@@ -254,7 +254,7 @@ class TextMessageHandler{
     }
 
     detectImg(imageData) {
-        var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        var matches = imageData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
             response = {};
 
         if (matches.length !== 3) {
