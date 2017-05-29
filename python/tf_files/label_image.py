@@ -4,8 +4,7 @@ import base64
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-tmp = 0.0
-threshold = 0.87
+tmp = 0.87
 result = "無可辨識之結果"
 
 # change this as you see fit
@@ -34,14 +33,18 @@ with tf.Session() as sess:
     # Sort to show labels of first prediction in order of confidence
     top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
     
+    highest = 0
     for node_id in top_k:
         human_string = label_lines[node_id]
         score = predictions[0][node_id]
+        
+        if score > highest:
+            highest = score
+
         if score > tmp:
           tmp = score
           result = human_string
         # print('%s (score = %.5f)' % (human_string, score))
 
-    if threshold < tmp
-        print('%s (%.5f)' % (result, tmp))
+    print('%s (%.5f)' % (result, highest))
 
