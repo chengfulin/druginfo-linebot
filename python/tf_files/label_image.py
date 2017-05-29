@@ -4,6 +4,9 @@ import tensorflow as tf
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+tmp = 0
+result = ""
+
 # change this as you see fit
 image_path = sys.argv[1]
 
@@ -33,4 +36,12 @@ with tf.Session() as sess:
     for node_id in top_k:
         human_string = label_lines[node_id]
         score = predictions[0][node_id]
-        print('%s (score = %.5f)' % (human_string, score))
+        if score > tmp:
+          tmp = score
+          result = human_string
+        # print('%s (score = %.5f)' % (human_string, score))
+
+    print(human_string)
+
+
+
