@@ -1,4 +1,4 @@
-const spawn = require('child_process').spawn;
+const spawn = require('child_process').exec;
 
 class DrugDetection {
 
@@ -13,17 +13,13 @@ class DrugDetection {
         //     console.log('results: %j', results);
         // });
         let outputData;
-        const py = spawn('python', ['./python/tf_files/label_image.py']);
-        py.stdout.on('data', (data) => {
-            outputData = data.toString();
-            console.log('>> on data: ' + data.toString());
+        exec('python ./python/tf_files/label_image.py morphine.jpg', (error, stdout, stderr) => {
+            if (error) {
+                console.log(`>> exec error: ${error}`);
+                res.status(500).send('/trydetect failed');
+            }
+            res.send(`output: ${stdout}`);
         });
-        py.stdout.on('end', () => {
-            console.log('>> on end');
-            res.send(outputData || 'no data');
-        });
-        py.stdin.write('morphine.jpg\n');
-        py.stdin.end();
     }
 }
 
