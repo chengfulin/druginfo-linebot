@@ -1,6 +1,7 @@
 import os, sys
-sys.path.insert(0, './python/tf_files')
+sys.path.insert(0, '../../python/tf_files')
 import tensorflow as tf
+import base64
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
