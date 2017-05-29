@@ -10,6 +10,7 @@ result = ""
 # change this as you see fit
 # image_path = sys.argv[1]
 image_path = sys.stdin.readlines()[0]
+print image_path
 
 # Read in the image_data
 image_data = tf.gfile.FastGFile(image_path, 'rb').read()
