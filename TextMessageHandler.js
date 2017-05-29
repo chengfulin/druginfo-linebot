@@ -268,14 +268,14 @@ class TextMessageHandler{
         fs.writeFile(tempFileName, imageData, (error) => {
             if (error) throw error;
             exec(`python ./python/tf_files/label_image.py ${tempFileName}`, (error, stdout, stderr) => {
+                fs.unlink(tempFileName, (err) => {
+                    if (err) throw err;
+                    console.log('>> successfully delete temp file');
+                });
                 if (error) {
-                    throw new Error('>> detect failed');
+                    throw error;
                 } else {
                     event.reply(`辨識結果: ${stdout}`);
-                    fs.unlink(tempFileName, (err) => {
-                        if (err) throw err;
-                        console.log('>> successfully delete temp file');
-                    });
                 }
             });
         });
