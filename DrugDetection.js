@@ -17,6 +17,7 @@ class DrugDetection {
             if (error) {
                 console.log(`>> exec error: ${error}`);
                 res.status(500).send('/trydetect failed');
+                return;
             }
             res.send(`output: ${stdout}`);
         });
