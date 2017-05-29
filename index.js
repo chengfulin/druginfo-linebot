@@ -22,7 +22,10 @@ const apiRouter = require('./api/api');
 app.use(bodyParser.urlencoded({ extended: true })); // parsing application/x-www-form-urlencoded
 app.use(bodyParser.json())
 app.use('/api', apiRouter);
-
+app.get('/trydetect', (req, res) => {
+    const detector = require('./DrugDetection');
+    detector.process(res);
+});
 
 // handle message event
 const textMessageHandler = require('./TextMessageHandler');

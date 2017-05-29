@@ -1,5 +1,7 @@
 const drugsInfo = require('./drugs.json');
 const Notification = require("./app/models/Notification");
+const exec = require('child_process').exec;
+const fs = require('fs');
 
 class TextMessageHandler{
     constructor() {
@@ -24,7 +26,13 @@ class TextMessageHandler{
      * @param {*} event 
      */
     process(event) {
-        if (this._pattern.help.test(event.message.text)) {
+        if (event.message.type === 'image') {
+            this.processDrugImage(event);
+        }
+        else if (event.message.type === 'location') {
+            this.processNotification(event);
+        }
+        else if (this._pattern.help.test(event.message.text)) {
             this.checkToCompleteNotification(event)
                 .then((num) => {
                     if (num === 0) this.showHelp(event);
@@ -41,9 +49,6 @@ class TextMessageHandler{
                 .then((num) => {
                     if (num === 0) this.processDrugInfo(event);
                 });
-        }
-        else if (event.message.type === 'location') {
-            this.processNotification(event);
         }
         else if (this._pattern.cancel.test(event.message.text)) {
             this.cancelNotification(event);
@@ -237,6 +242,52 @@ class TextMessageHandler{
 
     showHelp(event) {
         event.reply('你好！我藥報抱！\n通報濫用藥物情形\n請告訴我"通報  藥品名"\n查詢管制藥品資訊\n請跟我說"查詢  藥品名"');
+    }
+
+    /**
+     * process image message
+     * @param {*} event 
+     */
+    processDrugImage(event) {
+        event.message.content()
+            .then((content) => {
+                // const imageData = content.toString('base64');
+                this.detectImg(event, content);
+            })
+            .catch(error => console.log(error));
+    }
+
+    /**
+     * detect image
+     * @param {*} event 
+     * @param {*} imageData 
+     */
+    detectImg(event, imageData) {
+        // var matches = imageData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        //     response = {};
+
+        // if (matches.length !== 3) {
+        //     return new Error('Invalid input string');
+        // }
+
+        // response.type = matches[1];
+        // response.data = new Buffer(matches[2], 'base64');
+
+        const tempFileName = `${Date.now()}`;
+        fs.writeFile(tempFileName, imageData, (error) => {
+            if (error) throw error;
+            exec(`python ./python/tf_files/label_image.py ${tempFileName}`, (error, stdout, stderr) => {
+                fs.unlink(tempFileName, (err) => {
+                    if (err) throw err;
+                    console.log('>> successfully delete temp file');
+                });
+                if (error) {
+                    throw error;
+                } else {
+                    event.reply(`辨識結果: ${stdout}`);
+                }
+            });
+        });
     }
 }
 
