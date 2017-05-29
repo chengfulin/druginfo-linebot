@@ -247,26 +247,25 @@ class TextMessageHandler{
     processDrugImage(event) {
         event.message.content()
             .then((content) => {
-                console.log(content);
-                const imageData = content.toString('base64');
-                // this.detectImg(imageData);
+                // const imageData = content.toString('base64');
+                this.detectImg(content);
             })
             .catch(error => console.log(error));
     }
 
     detectImg(imageData) {
-        var matches = imageData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-            response = {};
+        // var matches = imageData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        //     response = {};
 
-        if (matches.length !== 3) {
-            return new Error('Invalid input string');
-        }
+        // if (matches.length !== 3) {
+        //     return new Error('Invalid input string');
+        // }
 
-        response.type = matches[1];
-        response.data = new Buffer(matches[2], 'base64');
+        // response.type = matches[1];
+        // response.data = new Buffer(matches[2], 'base64');
 
-        const tempFileName = `${Date.now()}.${response.type}`;
-        fs.writeFile(`${Date.now()}.${response.type}`, response.data, (error) => {
+        const tempFileName = `${Date.now()}`;
+        fs.writeFile(`${Date.now()}`, imageData, (error) => {
             if (error) throw error;
             exec(`python ./python/tf_files/label_image.py ${tempFileName}`, (error, stdout, stderr) => {
                 if (error) {
